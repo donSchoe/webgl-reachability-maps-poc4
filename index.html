@@ -99,9 +99,13 @@
       /* global webgl context, shader program */
       var gl, sp;
 
-      /* global center berlin, default zoom, preload an example tile */
+      /* global center berlin, default zoom */
       var CENTER_BERLIN = [52.516, 13.377];
       var DEFAULT_ZOOM = 14;
+
+      /* default travel type */
+      var TRAVEL_TYPE = 'car';
+      var DATA;
 
       /* cache for all tile's vertex, index and color buffers */
       var TILE_CACHE;
@@ -165,8 +169,14 @@
         var hardwareTiles = L.tileLayer.canvas({async:false});
         hardwareTiles.drawTile = function(canvas, tile, zoom) {
 
-            /* currently: random geometries */
-            createRandomTileBuffer(tile, zoom);
+//          if (zoom == 14 && tile.x == 8800 && tile.y == 5373)
+//          {
+            /* request tile from tiling server */
+            requestTile(tile, zoom);
+//          } else {
+//            /* currently: random geometries */
+//            //createRandomTileBuffer(tile, zoom);
+//          }
         }
 
         /* redraw the scene after all tiles are loaded */
@@ -180,6 +190,7 @@
 
         /* adjust misc map settings */
         m.zoomControl.setPosition('bottomright');
+
       }
 
       /**
@@ -289,9 +300,6 @@
        */
       function createRandomTileBuffer(tile, zoom) {
 
-        /* request tile from tiling server */
-        requestTile(tile.x, tile.y, zoom);
-
         /* calculate tile size, corners and bounds */
         var size = EARTH_EQUATOR / Math.pow(2, zoom);
         var west = (size * tile.x) - (EARTH_EQUATOR / 2.0);
@@ -361,56 +369,76 @@
       }
 
       /**
-       * Create a tile from the geojson demo tiles.
+       * Create a tile from the geojson tiles.
        *
        * @param {object} tile the tile to render
        * @param {integer} zoom the current zoom level
        */
-      function createDemoTileBuffer(tile, zoom) { // @TODO remove
+      function createTileBuffer(tile, zoom) {
 
-        /* this creates a tile buffer for each line to draw: dirty abuse,
-           do not use in production. only ment to bridge the time till we
-           have a working data providing backend. */
-        for (var i = DATA.features.length - 1; i >= 0; i--) {
-          var ftr = DATA.features[i];
-          var vtxSize = 2;
-          var clrSize = 4;
-          var clrPicker = [
-            254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0,  /* #feefa7 */
-            244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0,  /* #f46d43 */
-          ];
-          var vtx = new Float32Array(vtxSize * ftr.geometry.coordinates.length);
-          var idx = new Uint16Array((ftr.geometry.coordinates.length - 1) * 2);
-          var clr = new Float32Array(clrSize * ftr.geometry.coordinates.length);
-          for (var j = 0; j < ftr.geometry.coordinates.length; j++) {
-            var d = ftr.geometry.coordinates[j];
-            var p = latLonToPixels(d[1], d[0]);
-            vtx[j * vtxSize]     = p.x;
-            vtx[j * vtxSize + 1] = p.y;
-            clr[j * clrSize] = clrPicker[j * 3 % 6];
-            clr[j * clrSize + 1] = clrPicker[j * 3 % 6 + 1];
-            clr[j * clrSize + 2] = clrPicker[j * 3 % 6 + 2];
-            clr[j * clrSize + 3] = 1.0;
-          }
-          var k = 0, n = 0;
-          for (var j = 0; j < (ftr.geometry.coordinates.length - 1) * 2; j++) {
-            idx[j] = j - n;
-            k++;
-            if (k > 1) {
-              k = 0;
-              n++;
-            }
-          }
-          var tileBuffer = L.tileBuffer(vtx, idx, clr, { // multiple tilebuffers for same tile
-            x: tile.x,
-            y: tile.y,
-            zoom: zoom
-          });
-          if (TILE_CACHE.getZoom() != zoom) {
-            TILE_CACHE.resetOnZoom(zoom);
-          }
-          TILE_CACHE.addTile(tileBuffer); // do not do this in production
+        var clrPicker = [
+          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0,  /* #feefa7 */
+          244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0,  /* #f46d43 */
+        ];
+
+        var vtx = new Float32Array(DATA['vertex_array'][0]);
+        var idx = new Uint16Array(DATA['index_array'][0]);
+        var clr = new Float32Array(2 * vtx.length);
+        for (var i = 0; i < vtx.length / 2; i++) {
+          clr[i * 4] = clrPicker[i * 3 % 6];
+          clr[i * 4 + 1] = clrPicker[i * 3 % 6 + 1];
+          clr[i * 4 + 2] = clrPicker[i * 3 % 6 + 2];
+          clr[i * 4 + 3] = 1.0;
         }
+
+//        var vtx = new Float32Array([
+//          137.51255798339844,83.95538330078125,
+//          137.51255798339844,83.95538330078125,
+//          137.51416015625,83.95355987548828,
+//          137.51416015625,83.95355987548828,
+//          137.5126495361328,83.96564483642578,
+//          137.5126495361328,83.96564483642578,
+//          137.5155029296875,83.96843719482422,
+//          137.5155029296875,83.96843719482422,
+//          137.50357055664062,83.96821594238281,
+//          137.50357055664062,83.96821594238281,
+//          137.5006561279297,83.95479583740234
+//        ]);
+//        var idx = new Uint16Array([
+//          0,1,
+//          3,4,
+//          6,7,
+//          9,10
+//        ]);
+//        var clr = new Float32Array([
+//          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0, 1.0,
+//          244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0, 1.0,
+//          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0, 1.0,
+//          244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0, 1.0,
+//          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0, 1.0,
+//          244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0, 1.0,
+//          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0, 1.0,
+//          244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0, 1.0,
+//          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0, 1.0,
+//          244.0 / 255.0, 109.0 / 255.0,  67.0 / 255.0, 1.0,
+//          254.0 / 255.0, 239.0 / 255.0, 167.0 / 255.0, 1.0
+//        ]);
+
+        //window.console.log(vtx);
+        //window.console.log(idx);
+        //window.console.log(clr);
+
+        var tileBuffer = L.tileBuffer(vtx, idx, clr, {
+          x: tile.x,
+          y: tile.y,
+          zoom: zoom
+        });
+
+        if (TILE_CACHE.getZoom() != zoom) {
+          TILE_CACHE.resetOnZoom(zoom);
+        }
+        TILE_CACHE.addTile(tileBuffer);
+        drawGL();
       }
 
       /**
@@ -420,9 +448,29 @@
        * @param (Integer) y the y coordinate of the tile
        * @param (Integer) z the zoom factor of the tile
        */
-      function requestTile(x, y, z) {
-        // @TODO request tile buffers from backend.
-        //log("GET http://" + Math.random().toString(36).substr(2, 5) + ".hpi.de/jan/tiles/" + z + "/" + x + "/" + y + ".gltf");
+      function requestTile(tile, zoom) {
+        //log("GET https://dev.route360.net/networkfiltering/gltf?x="
+        //    + tile.x + "&y=" + tile.y + "&z=" + zoom + "&type=" + TRAVEL_TYPE);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open(
+          'GET',
+          "https://dev.route360.net/networkfiltering/gltf?x="
+            + tile.x + "&y=" + tile.y + "&z=" + zoom + "&type=" + TRAVEL_TYPE,
+          true
+        );
+
+        xhr.onload = function () {
+          //log("xhr loaded");
+          DATA = JSON.parse(xhr.responseText);
+          createTileBuffer(tile, zoom);
+        };
+
+        xhr.onerror = function () {
+          //log("xhr error");
+        };
+
+        xhr.send();
       }
 
       /**
