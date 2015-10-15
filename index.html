@@ -61,24 +61,6 @@
     <script src="./lib/leaflet-tilebuffer/L.TileBuffer.js"></script>
     <script src="./lib/leaflet-tilebuffer/L.TileBufferCollection.js"></script>
 
-    <!-- data -->
-    <!-- include some example tiles. this is a simple and dirty approach to
-         bridge the time till we have a working backend. data format is
-         geojson which requires additional love. do not use in production. -->
-    <script src="./dat/6_34_20.js"></script>
-    <script src="./dat/7_68_41.js"></script>
-    <script src="./dat/8_137_83.js"></script>
-    <script src="./dat/9_275_167.js"></script>
-    <script src="./dat/10_550_335.js"></script>
-    <script src="./dat/11_1100_671.js"></script>
-    <script src="./dat/12_2200_1343.js"></script>
-    <script src="./dat/13_4400_2686.js"></script>
-    <script src="./dat/14_8800_5373.js"></script>
-    <script src="./dat/15_17600_10746.js"></script>
-    <script src="./dat/16_35200_21492.js"></script>
-    <script src="./dat/17_70400_42984.js"></script>
-    <script src="./dat/18_70400_85968.js"></script>
-
     <!-- shaders -->
     <script type="x-shader/x-vertex" id="shader-vtx">
       uniform mat4 u_matrix;
@@ -120,7 +102,6 @@
       /* global center berlin, default zoom, preload an example tile */
       var CENTER_BERLIN = [52.516, 13.377];
       var DEFAULT_ZOOM = 14;
-      var DATA = tile_14_8800_5373; // @TODO remove in production.
 
       /* cache for all tile's vertex, index and color buffers */
       var TILE_CACHE;
@@ -184,53 +165,8 @@
         var hardwareTiles = L.tileLayer.canvas({async:false});
         hardwareTiles.drawTile = function(canvas, tile, zoom) {
 
-          /* load some example tile geometries for selected tiles. this is a
-             simple and dirty approach to bridge the time till we have a working
-             backend. do not use in production. */ /* @TODO remove */
-          if (zoom == 6 && tile.x == 34 && tile.y == 20) {
-            DATA = tile_6_34_20;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 7 && tile.x == 68 && tile.y == 41) {
-            DATA = tile_7_68_41;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 8 && tile.x == 137 && tile.y == 83) {
-            DATA = tile_8_137_83;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 9 && tile.x == 275 && tile.y == 167) {
-            DATA = tile_9_275_167;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 10 && tile.x == 550 && tile.y == 335) {
-            DATA = tile_10_550_335;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 11 && tile.x == 1100 && tile.y == 671) {
-            DATA = tile_11_1100_671;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 12 && tile.x == 2200 && tile.y == 1343) {
-            DATA = tile_12_2200_1343;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 13 && tile.x == 4400 && tile.y == 2686) {
-            DATA = tile_13_4400_2686;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 14 && tile.x == 8800 && tile.y == 5373) {
-            DATA = tile_14_8800_5373;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 15 && tile.x == 17600 && tile.y == 10746) {
-            DATA = tile_15_17600_10746;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 16 && tile.x == 35200 && tile.y == 21492) {
-            DATA = tile_16_35200_21492;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 17 && tile.x == 70400 && tile.y == 42984) {
-            DATA = tile_17_70400_42984;
-            createDemoTileBuffer(tile, zoom);
-          } else if (zoom == 18 && tile.x == 140800 && tile.y == 85968) {
-            DATA = tile_18_70400_85968;
-            createDemoTileBuffer(tile, zoom);
-          } else {
-
             /* currently: random geometries */
             createRandomTileBuffer(tile, zoom);
-          }
         }
 
         /* redraw the scene after all tiles are loaded */
