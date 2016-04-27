@@ -9,18 +9,16 @@ Prototype 4
 
 Rendering of the street graph using a tiling approach. *work in progress*
 
-Demo & Blog
------------
+Demo
+----
 
-  - http://donschoe.github.io/leaflet-distance-maps-pt4/
-  - Read more: http://geogl.ghost.io/distance-maps-prototype-4/
+  - http://5chdn.github.io/leaflet-distance-maps-pt4/
 
 Credits
 -------
 
 Prototype 4 written and (c) by Alexander Schoedon <schoedon@uni-potsdam.de>
 for Spatial Analytics at the Hasso-Plattner-Institute.
-  - https://hpi.de/de/computer-graphics-systems/
 
 Inspired by Stanislav Sumbera's Leaflet Canvas Overlay.
   - http://blog.sumbera.com/2014/04/20/leaflet-canvas/
