@@ -46,7 +46,7 @@ function distance_map() {
     'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}';
   var attribution =
     '<a href="https://www.mapbox.com/developers/vector-tiles/">Mapbox</a> | '
-    + '<a href="https://mapzen.com/projects/vector-tiles/">Mapzen</a> | '
+    + '<a href="https://developers.route360.net/index.html">R360 API</a> | '
     + 'Rendering &copy; <a href="./LICENSE">Schoedon</a>';
   var token =
     'pk.eyJ1IjoiZG9uc2Nob2UiLCJhIjoiMkN5RUk0QSJ9.FGcEYWjfgcJUmSyN1tkwgQ';

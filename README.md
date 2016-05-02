@@ -28,9 +28,6 @@ Inspired by Stanislav Sumbera's Leaflet Canvas Overlay.
 Inspired by Vladimir Agafonkin's Leaflet Heat Maps.
   - https://github.com/Leaflet/Leaflet.heat
 
-Tiled vector data preprocessed and provided by Mapzen.
-  - https://mapzen.com/projects/vector-tiles/
-
 Tiled raster data preprocessed and provided by Mapbox.
   - https://www.mapbox.com/developers/vector-tiles/ (sic!)
 
