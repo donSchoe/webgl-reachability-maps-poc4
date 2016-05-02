@@ -1,24 +1,26 @@
 Distance Maps WebGL Vis
 =======================
 
-GPU-based (JS/WebGL) rendering of distance maps. Leaflet WebGL distance maps prototype #4 (snapshot), for educational purposes only.
+GPU-based (JS/WebGL) rendering of distance maps. Leaflet WebGL distance maps
+proof of concept #4, for educational purposes only.
 
 
-Prototype 4
------------
+Proof of Concept 4
+------------------
 
-Rendering of the street graph using a tiling approach. *work in progress*
+Rendering of the street graph using a webgl tiling approach.
 
 Demo
 ----
 
-  - http://5chdn.github.io/leaflet-distance-maps-pt4/
+  - http://5chdn.github.io/leaflet-distance-maps-poc4/
 
 Credits
 -------
 
-Prototype 4 written and (c) by Alexander Schoedon <schoedon@uni-potsdam.de>
+PoC 4 written and (c) by Alexander Schoedon <schoedon@uni-potsdam.de>
 for Spatial Analytics at the Hasso-Plattner-Institute.
+  - https://hpi.de/de/computer-graphics-systems/
 
 Inspired by Stanislav Sumbera's Leaflet Canvas Overlay.
   - http://blog.sumbera.com/2014/04/20/leaflet-canvas/
@@ -32,4 +34,5 @@ Tiled vector data preprocessed and provided by Mapzen.
 Tiled raster data preprocessed and provided by Mapbox.
   - https://www.mapbox.com/developers/vector-tiles/ (sic!)
 
-This project utilizes Leaflet, Mapbox, and WebGL debug utils by Google/Khronos.
+This project utilizes Leaflet, Mapbox, R360 API and WebGL debug utils by
+Google/Khronos.
