@@ -1,18 +1,19 @@
 Distance Maps WebGL Vis
 =======================
 
-GPU-based (JS/WebGL) rendering of distance maps. Leaflet WebGL distance maps prototype #4 (snapshot), for educational purposes only.
+GPU-based (JS/WebGL) rendering of distance maps. Leaflet WebGL distance maps
+proof of concept #4, for educational purposes only.
 
 
 Proof of Concept 4
 ------------------
 
-Rendering of the street graph using a tiling approach. *work in progress*
+Rendering of the street graph using a webgl tiling approach.
 
 Demo
 ----
 
-  - http://5chdn.github.io/leaflet-distance-maps-pt4/
+  - http://5chdn.github.io/leaflet-distance-maps-poc4/
 
 Credits
 -------
