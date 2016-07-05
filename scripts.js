@@ -16,9 +16,9 @@ var EARTH_EQUATOR = 40075016.68557849;
 var EARTH_RADIUS = 6378137.0;
 
 /**
- * initialize the distance map visualization
+ * initialize the accessibility map visualization
  */
-function distance_map() {
+function accessibility_map() {
 
   /* leaflet map canvas */
   m = L.map('map', {
