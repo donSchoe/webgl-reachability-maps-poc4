@@ -1,8 +1,8 @@
-Distance Maps WebGL Vis
-=======================
+Accessibility Maps WebGL Vis
+============================
 
-GPU-based (JS/WebGL) rendering of distance maps. Leaflet WebGL distance maps
-proof of concept #4, for educational purposes only.
+GPU-based (JS/WebGL) rendering of accessibility maps. Leaflet WebGL 
+accessibility maps proof of concept #4, for educational purposes only.
 
 
 Proof of Concept 4
@@ -13,7 +13,7 @@ Rendering of the street graph using a webgl tiling approach.
 Demo
 ----
 
-  - http://5chdn.github.io/leaflet-distance-maps-poc4/
+  - http://5chdn.github.io/webgl-accessibility-maps-poc4/
 
 Credits
 -------
