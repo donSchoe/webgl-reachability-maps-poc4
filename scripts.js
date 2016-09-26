@@ -268,7 +268,7 @@ function getRoute360TileBuffer(tile, zoom) {
 function requestTile(x, y, z, callback) {
 
     var travelOptions = r360.travelOptions();
-    travelOptions.setServiceKey('uhWrWpUhyZQy8rPfiC7X');
+    travelOptions.setServiceKey('ZTOCBA4MNLQLQQPXHQDW');
 
     // if (document.location.hostname == "localhost")
         // travelOptions.setServiceUrl('http://localhost:8080/');
