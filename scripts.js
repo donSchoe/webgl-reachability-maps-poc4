@@ -16,9 +16,9 @@ var EARTH_EQUATOR = 40075016.68557849;
 var EARTH_RADIUS = 6378137.0;
 
 /**
- * initialize the distance map visualization
+ * initialize the accessibility map visualization
  */
-function distance_map() {
+function accessibility_map() {
 
   /* leaflet map canvas */
   m = L.map('map', {
@@ -270,10 +270,7 @@ function requestTile(x, y, z, callback) {
     var travelOptions = r360.travelOptions();
     travelOptions.setServiceKey('ZTOCBA4MNLQLQQPXHQDW');
 
-    // if (document.location.hostname == "localhost")
-        // travelOptions.setServiceUrl('http://localhost:8080/');
-    // else
-        travelOptions.setServiceUrl('https://dev.route360.net/mobie/');
+    travelOptions.setServiceUrl('https://dev.route360.net/mobie/');
 
     travelOptions.addSource(marker);
     travelOptions.setMaxRoutingTime(1200);
